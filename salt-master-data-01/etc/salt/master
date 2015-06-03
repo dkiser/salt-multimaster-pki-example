@@ -1,0 +1,3 @@
+user: salt
+
+master_sign_pubkey: True
