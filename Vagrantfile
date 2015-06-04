@@ -30,8 +30,8 @@ Vagrant.configure(2) do |config|
   config.vm.box_url = "https://f0fff3908f081cb6461b407be80daf97f07ac418.googledrive.com/host/0BwtuV7VyVTSkUG1PM3pCeDJ4dVE/centos7.box"
 
   # For masterless, mount your salt file root
-  config.vm.synced_folder "salt/file", "/srv/salt", :nfs => true  
-  config.vm.synced_folder "salt/pillar", "/srv/pillar", :nfs => true
+  config.vm.synced_folder "salt/file", "/srv/salt"
+  config.vm.synced_folder "salt/pillar", "/srv/pillar"
 
   boxes.each do |opts|
     config.vm.define opts[:name] do |config|
@@ -43,8 +43,12 @@ Vagrant.configure(2) do |config|
         v.customize ["modifyvm", :id, "--cpus", opts[:cpu]]
       end
 
-      ## Use all the defaults:
+      # bootstrap allow Salt to manage docker
+      config.vm.provision :shell, path: "bootstrap.sh"
+
+      # provision with Salt
       config.vm.provision :salt do |salt|
+        #salt.install_type = "git"
         salt.minion_config = "salt/minion"
         salt.run_highstate = true
       end

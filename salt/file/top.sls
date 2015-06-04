@@ -1,6 +1,7 @@
 base:
   '*':
     - epel
+    - git
     - docker
 
   'salt-master-*':

@@ -1,24 +1,3 @@
-
-# make sure git is installed
-git:
-  pkg.installed
-
-docker-py:
-  pkg.installed:
-    - name: python-pip
-  pip.installed:
-    - require:
-      - pkg: python-pip
-
-# upgrade six, cause centos reasons ;(
-# https://github.com/saltstack/salt/issues/15803
-six:
-  pip.installed:
-    - upgrade: True
-    - require:
-      - pkg: python-pip
-
-
 # git clone the master docker container
 docker-salt-master:
   git.latest:
