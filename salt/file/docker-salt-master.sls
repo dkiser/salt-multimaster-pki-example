@@ -32,6 +32,8 @@ salt-master-data:
     - image: dkiser/salt-master-data
 
 # run master with volumes from shared volume container
+# make sure we just bind to the private network ports for the demo
+{% set bind_ip = salt['cmd.run']('ip addr show | grep  -E  -o "192.168.69[.0-9]+" | head -1') %}
 salt-master:
   docker.running:
     - image: dkiser/salt-master
@@ -41,8 +43,8 @@ salt-master:
       - LOG_LEVEL: debug
     - ports:
       - "4505/tcp":
-          HostIp: ""
+          HostIp: "{{ bind_ip }}"
           HostPort: "4505"
       - "4506/tcp":
-          HostIp: ""
+          HostIp: "{{ bind_ip }}"
           HostPort: "4506"
