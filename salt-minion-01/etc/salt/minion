@@ -1,0 +1,10 @@
+user: salt
+
+master:
+  - 192.168.69.20
+  - 192.168.69.30
+master_type: failover
+
+environment: stage
+
+verify_master_pubkey_sign: True

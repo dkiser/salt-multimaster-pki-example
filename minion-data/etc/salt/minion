@@ -1,7 +1,0 @@
-user: salt
-
-master: 192.168.59.103
-
-environment: stage
-
-verify_master_pubkey_sign: True
